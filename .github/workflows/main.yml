@@ -1,28 +1,44 @@
-name: CI/CD Pipeline for React App
+name: CI/CD for Vercel App
 
 on:
   push:
     branches:
-      - main
+      - main    # Trigger on push to main branch
   pull_request:
     branches:
-      - main
+      - main    # Trigger on pull request to main branch
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-      # 1. Kiểm tra mã nguồn từ GitHub
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 2. Cài đặt Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Hoặc phiên bản Node.js bạn muốn
+          node-version: '16'  # Chọn version Node.js bạn muốn sử dụng
 
-      # 3. Cài đặt các dependencies
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+
+      - name: Run tests
+        run: |
+          npm run test   # Thực hiện test của bạn nếu có
+
+      - name: Build the project
+        run: |
+          npm run build  # Xây dựng dự án với Vite
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel_token: ${{ secrets.VERCEL_TOKEN }}
+          vercel_org_id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
+          vercel_directory: ./dist  # Chỉ định thư mục chứa files đã build
+
