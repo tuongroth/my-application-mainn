@@ -25,9 +25,9 @@ jobs:
         run: |
           npm install
 
-     - name: Run tests
-  run: |
-    npm run test || echo "No tests specified"  # Nếu không có test, không làm gì cả.
+      - name: Run tests
+        run: |
+          npm run test || echo "No tests specified"  # Nếu không có test, không làm gì cả.
 
       - name: Build the project
         run: |
@@ -40,5 +40,6 @@ jobs:
           vercel_org_id: ${{ secrets.VERCEL_ORG_ID }}
           vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel_team_id: ${{ secrets.VERCEL_TEAM_ID }}
-          vercel_directory: ./dist  # Chỉ định thư mục chứa files đã build
+          vercel_directory: ./dist
+
 
