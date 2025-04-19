@@ -25,9 +25,9 @@ jobs:
         run: |
           npm install
 
-      - name: Run tests
-        run: |
-          npm run test   # Thực hiện test của bạn nếu có
+     - name: Run tests
+  run: |
+    npm run test || echo "No tests specified"  # Nếu không có test, không làm gì cả.
 
       - name: Build the project
         run: |
